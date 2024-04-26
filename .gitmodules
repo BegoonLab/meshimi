@@ -1,0 +1,3 @@
+[submodule "lib/libcrc"]
+	path = lib/libcrc
+	url = https://github.com/lammertb/libcrc
