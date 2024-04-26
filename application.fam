@@ -1,0 +1,26 @@
+App(
+    appid="begoonlab_meshimi",
+    name="Meshimi",
+    apptype=FlipperAppType.EXTERNAL,
+    entry_point="meshimi_app",
+    stack_size=4 * 1024,
+    icon="A_Sub1ghz_14",
+    order=20,
+    fap_private_libs=[
+        Lib(
+            name="libcrc",
+            fap_include_paths=["include"],
+            sources=[
+                "src/crc32.c",
+            ],
+        ),
+    ],
+    requires=["gui"],
+    fap_libs=["assets"],
+    fap_icon="icon.png",
+    fap_icon_assets="icons",
+    fap_category="GPIO",
+    fap_author="Alexander Begoon",
+    fap_description="Meshimi empowers your Flipper Zero with advanced mesh networking capabilities, utilizing Meshtastic, LoRaWAN, and a proprietary secure mesh protocol to deliver superior connectivity and robust security.",
+    fap_weburl="https://github.com/BegoonLab/meshimi",
+)
