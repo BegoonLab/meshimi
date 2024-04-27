@@ -2,6 +2,8 @@
 
 #include "meshimi_types.h"
 #include "applications_user/meshimi/scenes/meshimi_scene.h"
+#include "helpers/meshimi_config.h"
+#include "bt/bt_service/bt.h"
 
 #include <assets_icons.h>
 #include <dialogs/dialogs.h>
@@ -19,11 +21,17 @@
 #include <furi_hal.h>
 
 #define MESHIMI_VERSION "1.0"
-#define MESHIMI_GITHUB "https://github.com/BegoonLab/meshimi"
+#define MESHIMI_GITHUB "github.com/BegoonLab/meshimi"
+#define MESHIMI_GET_MODULE "begoonlab.tech/meshimi"
+#define BACKLIGHT_ALWAYS_ON
+#define LOG_TAG "Meshimi"
 
 typedef struct Meshimi Meshimi;
 
 struct Meshimi {
+    MeshimiConfig* config;
+
+    Bt* bt;
     Gui* gui;
     NotificationApp* notifications;
 
@@ -35,6 +43,7 @@ struct Meshimi {
     TextInput* text_input;
     Widget* widget;
     DialogsApp* dialogs;
+    VariableItemList* variable_item_list;
 };
 
 Meshimi* meshimi_alloc();

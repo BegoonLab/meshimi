@@ -9,7 +9,6 @@
 #include "pb_encode.h"
 
 const NotificationSequence sequence_test_wait = {
-        &message_display_backlight_enforce_on,
         &message_green_255,
         &message_red_255,
 
@@ -30,7 +29,6 @@ const NotificationSequence sequence_test_wait = {
 };
 
 const NotificationSequence sequence_test_error = {
-        &message_display_backlight_enforce_on,
         &message_red_255,
         &message_note_e6,
         &message_delay_50,
@@ -45,7 +43,6 @@ void meshimi_scene_test_on_enter(void *context) {
 
 
 //    FuriMessageQueue* event_queue = furi_message_queue_alloc(8, sizeof(LoraTestEvent));
-    NotificationApp *notifications = furi_record_open(RECORD_NOTIFICATION);
 //    LoraTestEvent event;
     FuriString *buffer = furi_string_alloc();
 //    FuriTimer* timer = furi_timer_alloc(lora_scene_test_update, FuriTimerTypePeriodic, event_queue);
@@ -57,7 +54,7 @@ void meshimi_scene_test_on_enter(void *context) {
 
     view_dispatcher_switch_to_view(meshimi->view_dispatcher, MeshimiViewIdWidget);
 
-    notification_message(notifications, &sequence_test_wait);
+    notification_message(meshimi->notifications, &sequence_test_wait);
 
     furi_string_cat_printf(buffer, "SPI receiving the data\n");
     widget_add_string_multiline_element(
@@ -116,7 +113,7 @@ void meshimi_scene_test_on_enter(void *context) {
     widget_add_string_multiline_element(
             meshimi->widget, 0, 0, AlignLeft, AlignTop, FontSecondary, "Meshimi module disconnected\n");
 
-    notification_message(notifications, &sequence_test_error);
+    notification_message(meshimi->notifications, &sequence_test_error);
 
     furi_delay_ms(3000);
 

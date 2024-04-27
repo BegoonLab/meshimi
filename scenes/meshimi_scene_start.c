@@ -3,7 +3,7 @@
 enum SubmenuIndex {
     SubmenuIndexConnect,
     SubmenuIndexTest,
-    SubmenuIndexSettings,
+    SubmenuIndexConfiguration,
     SubmenuIndexAbout,
 };
 
@@ -18,9 +18,7 @@ void meshimi_scene_start_on_enter(void *context) {
     submenu_add_item(
             meshimi->submenu, "Connect", SubmenuIndexConnect, meshimi_scene_start_submenu_callback, meshimi);
     submenu_add_item(
-            meshimi->submenu, "Test", SubmenuIndexTest, meshimi_scene_start_submenu_callback, meshimi);
-    submenu_add_item(
-            meshimi->submenu, "Settings", SubmenuIndexSettings, meshimi_scene_start_submenu_callback, meshimi);
+            meshimi->submenu, "Config", SubmenuIndexConfiguration, meshimi_scene_start_submenu_callback, meshimi);
     submenu_add_item(
             meshimi->submenu, "About", SubmenuIndexAbout, meshimi_scene_start_submenu_callback, meshimi);
     submenu_set_selected_item(
@@ -47,10 +45,10 @@ bool meshimi_scene_start_on_event(void *context, SceneManagerEvent event) {
                     meshimi->scene_manager, MeshimiSceneStart, SubmenuIndexTest);
             scene_manager_next_scene(meshimi->scene_manager, MeshimiSceneTest);
             return true;
-        } else if (event.event == SubmenuIndexSettings) {
+        } else if (event.event == SubmenuIndexConfiguration) {
             scene_manager_set_scene_state(
-                    meshimi->scene_manager, MeshimiSceneStart, SubmenuIndexSettings);
-            scene_manager_next_scene(meshimi->scene_manager, MeshimiSceneSettings);
+                    meshimi->scene_manager, MeshimiSceneStart, SubmenuIndexConfiguration);
+            scene_manager_next_scene(meshimi->scene_manager, MeshimiSceneConfiguration);
             return true;
         } else if (event.event == SubmenuIndexAbout) {
             scene_manager_set_scene_state(

@@ -5,4 +5,6 @@ typedef enum {
     MeshimiViewIdPopup,
     MeshimiViewIdTextInput,
     MeshimiViewIdWidget,
+    MeshimiViewIdVariableItemList,
+    MeshimiViewIdMode,
 } MeshimiViewId;
