@@ -21,6 +21,9 @@ void meshimi_tick_event_callback(void* context) {
 Meshimi* meshimi_alloc() {
     Meshimi* meshimi = malloc(sizeof(Meshimi));
 
+    // Meshimi Configuration
+    meshimi->config = meshimi_config_alloc();
+
     // GUI
     meshimi->gui = furi_record_open(RECORD_GUI);
 
@@ -68,6 +71,13 @@ Meshimi* meshimi_alloc() {
     // Dialog
     meshimi->dialogs = furi_record_open(RECORD_DIALOGS);
 
+    // Views
+    meshimi->meshimi_view_mode = meshimi_view_mode_alloc(meshimi->config);
+    view_dispatcher_add_view(
+        meshimi->view_dispatcher,
+        MeshimiViewIdMode,
+        meshimi_view_mode_get_view(meshimi->meshimi_view_mode));
+
     // Variable Item List
     meshimi->variable_item_list = variable_item_list_alloc();
     view_dispatcher_add_view(
@@ -75,8 +85,7 @@ Meshimi* meshimi_alloc() {
         MeshimiViewIdVariableItemList,
         variable_item_list_get_view(meshimi->variable_item_list));
 
-    // Meshimi Configuration
-    meshimi->config = meshimi_config_alloc();
+
 
     furi_hal_spi_bus_handle_init(&furi_hal_spi_bus_handle_external);
 
@@ -112,6 +121,10 @@ void meshimi_free(Meshimi* meshimi) {
     // Popup
     view_dispatcher_remove_view(meshimi->view_dispatcher, MeshimiViewIdPopup);
     popup_free(meshimi->popup);
+
+    // Views
+    view_dispatcher_remove_view(meshimi->view_dispatcher, MeshimiViewIdMode);
+    meshimi_view_mode_free(meshimi->meshimi_view_mode);
 
     // Scene manager
     scene_manager_free(meshimi->scene_manager);

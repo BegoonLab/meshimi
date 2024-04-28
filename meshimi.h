@@ -4,6 +4,7 @@
 #include "applications_user/meshimi/scenes/meshimi_scene.h"
 #include "helpers/meshimi_config.h"
 #include "bt/bt_service/bt.h"
+#include "views/meshimi_view_mode.h"
 
 #include <assets_icons.h>
 #include <dialogs/dialogs.h>
@@ -44,6 +45,7 @@ struct Meshimi {
     Widget* widget;
     DialogsApp* dialogs;
     VariableItemList* variable_item_list;
+    MeshimiViewMode* meshimi_view_mode;
 };
 
 Meshimi* meshimi_alloc();

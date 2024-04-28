@@ -2,12 +2,13 @@
 
 #include <malloc.h>
 
+#define MODE_COUNT 5
 typedef enum MeshimiConfigMode {
     ModeSimpleRX = 0,
     ModeSimpleTX = 1,
     ModeMeshtastic = 2,
-    ModeMeshimi = 3,
-    ModeLoRaWAN = 4,
+    ModeLoRaWAN = 3,
+    ModeMeshimi = 4,
 } MeshimiConfigMode;
 
 typedef struct {
@@ -41,3 +42,13 @@ void meshimi_mode_set(MeshimiConfig* instance, MeshimiConfigMode mode);
  * @return MeshimiConfigMode Mode
  */
 MeshimiConfigMode meshimi_mode_get(MeshimiConfig* instance);
+
+/**
+ * Get text representation of the mode
+ *
+ * @param MeshimiConfigMode mode
+ * @return
+ */
+const char* meshimi_mode_get_text(MeshimiConfigMode mode);
+
+const enum MeshimiConfigMode* meshimi_mode_get_value();
