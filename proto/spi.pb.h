@@ -44,6 +44,12 @@ typedef enum _LoRaBandwidth {
     LoRaBandwidth_BW_500 = 9
 } LoRaBandwidth;
 
+/* LoRa Low DataRate Optimization */
+typedef enum _LoRaLowDataRateOptimization {
+    LoRaLowDataRateOptimization_LDRO_OFF = 0,
+    LoRaLowDataRateOptimization_LDRO_ON = 1
+} LoRaLowDataRateOptimization;
+
 /* LoRa packet length enumeration */
 typedef enum _LoRaPacketLengthMode {
     LoRaPacketLengthMode_EXPLICIT = 0,
@@ -99,7 +105,7 @@ typedef struct _LoRaModulationParams {
     LoRaSpreadingFactor sf; /* LoRa Spreading Factor */
     LoRaCodingRate cr; /* LoRa Coding Rate */
     LoRaBandwidth bw; /* LoRa Bandwidth */
-    uint8_t ldro; /* Low DataRate Optimization configuration */
+    LoRaLowDataRateOptimization ldro; /* Low DataRate Optimization configuration */
 } LoRaModulationParams;
 
 /* LoRa packet parameters */
@@ -166,6 +172,10 @@ extern "C" {
 #define _LoRaBandwidth_MAX LoRaBandwidth_BW_500
 #define _LoRaBandwidth_ARRAYSIZE ((LoRaBandwidth)(LoRaBandwidth_BW_500+1))
 
+#define _LoRaLowDataRateOptimization_MIN LoRaLowDataRateOptimization_LDRO_OFF
+#define _LoRaLowDataRateOptimization_MAX LoRaLowDataRateOptimization_LDRO_ON
+#define _LoRaLowDataRateOptimization_ARRAYSIZE ((LoRaLowDataRateOptimization)(LoRaLowDataRateOptimization_LDRO_ON+1))
+
 #define _LoRaPacketLengthMode_MIN LoRaPacketLengthMode_EXPLICIT
 #define _LoRaPacketLengthMode_MAX LoRaPacketLengthMode_IMPLICIT
 #define _LoRaPacketLengthMode_ARRAYSIZE ((LoRaPacketLengthMode)(LoRaPacketLengthMode_IMPLICIT+1))
@@ -192,6 +202,7 @@ extern "C" {
 #define LoRaModulationParams_sf_ENUMTYPE LoRaSpreadingFactor
 #define LoRaModulationParams_cr_ENUMTYPE LoRaCodingRate
 #define LoRaModulationParams_bw_ENUMTYPE LoRaBandwidth
+#define LoRaModulationParams_ldro_ENUMTYPE LoRaLowDataRateOptimization
 
 #define LoRaPacketParams_headerType_ENUMTYPE LoRaPacketLengthMode
 
@@ -206,7 +217,7 @@ extern "C" {
 #define Response_LoRaMessageReceived_init_default {false, LoRaMessage_init_default}
 #define Response_Status_init_default             {_Response_Status_Enum_MIN, {{NULL}, NULL}}
 #define LoRaMessage_init_default                 {{0, {0}}, 0, 0, 0}
-#define LoRaModulationParams_init_default        {_LoRaSpreadingFactor_MIN, _LoRaCodingRate_MIN, _LoRaBandwidth_MIN, 0}
+#define LoRaModulationParams_init_default        {_LoRaSpreadingFactor_MIN, _LoRaCodingRate_MIN, _LoRaBandwidth_MIN, _LoRaLowDataRateOptimization_MIN}
 #define LoRaPacketParams_init_default            {0, _LoRaPacketLengthMode_MIN, 0, 0, 0}
 #define SpiPacket_init_zero                      {{0, {0}}, 0}
 #define SpiHeader_init_zero                      {_SpiHeader_Status_MIN, 0}
@@ -217,7 +228,7 @@ extern "C" {
 #define Response_LoRaMessageReceived_init_zero   {false, LoRaMessage_init_zero}
 #define Response_Status_init_zero                {_Response_Status_Enum_MIN, {{NULL}, NULL}}
 #define LoRaMessage_init_zero                    {{0, {0}}, 0, 0, 0}
-#define LoRaModulationParams_init_zero           {_LoRaSpreadingFactor_MIN, _LoRaCodingRate_MIN, _LoRaBandwidth_MIN, 0}
+#define LoRaModulationParams_init_zero           {_LoRaSpreadingFactor_MIN, _LoRaCodingRate_MIN, _LoRaBandwidth_MIN, _LoRaLowDataRateOptimization_MIN}
 #define LoRaPacketParams_init_zero               {0, _LoRaPacketLengthMode_MIN, 0, 0, 0}
 
 /* Field tags (for use in manual encoding/decoding) */
@@ -331,7 +342,7 @@ X(a, STATIC,   SINGULAR, INT32,    snr,               4)
 X(a, STATIC,   SINGULAR, UENUM,    sf,                1) \
 X(a, STATIC,   SINGULAR, UENUM,    cr,                2) \
 X(a, STATIC,   SINGULAR, UENUM,    bw,                3) \
-X(a, STATIC,   SINGULAR, UINT32,   ldro,              4)
+X(a, STATIC,   SINGULAR, UENUM,    ldro,              4)
 #define LoRaModulationParams_CALLBACK NULL
 #define LoRaModulationParams_DEFAULT NULL
 
@@ -373,11 +384,11 @@ extern const pb_msgdesc_t LoRaPacketParams_msg;
 /* Response_size depends on runtime parameters */
 /* Response_Status_size depends on runtime parameters */
 #define LoRaMessage_size                         283
-#define LoRaModulationParams_size                9
+#define LoRaModulationParams_size                8
 #define LoRaPacketParams_size                    16
-#define Request_ConnectToNetwork_size            37
-#define Request_size                             45
-#define Response_ConnectToNetwork_size           37
+#define Request_ConnectToNetwork_size            36
+#define Request_size                             44
+#define Response_ConnectToNetwork_size           36
 #define Response_LoRaMessageReceived_size        286
 #define SpiHeader_size                           8
 #define SpiPacket_size                           521
