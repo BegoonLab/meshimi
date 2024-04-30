@@ -2,8 +2,9 @@
 #include "meshimi_custom_event.h"
 #include <furi_hal_region.h>
 
-enum MeshimiItem {
+enum MeshimiConfigurationItem {
     MeshimiMode,
+    MeshimiFrequency,
 };
 
 static void meshimi_scene_configuration_var_list_enter_callback(void* context, uint32_t index) {
@@ -11,6 +12,8 @@ static void meshimi_scene_configuration_var_list_enter_callback(void* context, u
     Meshimi* meshimi = context;
     if(index == MeshimiMode) {
         view_dispatcher_send_custom_event(meshimi->view_dispatcher, MeshimiEventMode);
+    } else if(index == MeshimiFrequency) {
+        view_dispatcher_send_custom_event(meshimi->view_dispatcher, MeshimiEventFrequency);
     }
 }
 
@@ -80,7 +83,10 @@ void meshimi_scene_configuration_on_enter(void* context) {
         meshimi->variable_item_list, meshimi_scene_configuration_var_list_enter_callback, meshimi);
 
     if(mode == ModeSimpleRX) {
-        variable_item_list_add(meshimi->variable_item_list, "Mode: Simple RX", 0, NULL, NULL);
+        variable_item_list_add(
+            meshimi->variable_item_list, "Mode:             Simple RX", 0, NULL, NULL);
+        variable_item_list_add(
+            meshimi->variable_item_list, "Freq:       868,000,000Hz", 0, NULL, NULL);
         item = variable_item_list_add(
             meshimi->variable_item_list,
             "Spread. Factor:",
@@ -142,8 +148,13 @@ bool meshimi_scene_configuration_on_event(void* context, SceneManagerEvent event
         if(event.event == MeshimiEventMode) {
             scene_manager_set_scene_state(meshimi->scene_manager, MeshimiSceneStart, MeshimiMode);
             scene_manager_next_scene(meshimi->scene_manager, MeshimiSceneMode);
+            consumed = true;
+        } else if(event.event == MeshimiEventFrequency) {
+            scene_manager_set_scene_state(
+                meshimi->scene_manager, MeshimiSceneStart, MeshimiFrequency);
+            scene_manager_next_scene(meshimi->scene_manager, MeshimiSceneFrequency);
+            consumed = true;
         }
-        consumed = true;
     }
 
     if(event.type == SceneManagerEventTypeBack) {

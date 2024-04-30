@@ -52,8 +52,8 @@ typedef enum _LoRaLowDataRateOptimization {
 
 /* LoRa packet length enumeration */
 typedef enum _LoRaPacketLengthMode {
-    LoRaPacketLengthMode_EXPLICIT = 0,
-    LoRaPacketLengthMode_IMPLICIT = 1
+    LoRaPacketLengthMode_EXPLICIT = 0, /* Header included in the packet */
+    LoRaPacketLengthMode_IMPLICIT = 1 /* Header not included in the packet */
 } LoRaPacketLengthMode;
 
 typedef enum _SpiHeader_Status {

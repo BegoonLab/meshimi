@@ -55,6 +55,7 @@ const char* const ldro_text[LDRO_COUNT] = {
 
 struct MeshimiConfig {
     MeshimiConfigMode mode;
+    uint32_t lora_frequency;
     LoRaSpreadingFactor lora_spreading_factor;
     LoRaBandwidth lora_bandwidth;
     LoRaCodingRate lora_coding_rate;
@@ -66,6 +67,7 @@ MeshimiConfig* meshimi_config_alloc(void) {
 
     // TODO: Instantiate it from conf file stored at SD Card
     instance->mode = ModeSimpleRX;
+    instance->lora_frequency = 868000000U;
     instance->lora_spreading_factor = LoRaSpreadingFactor_SF7;
     instance->lora_bandwidth = LoRaBandwidth_BW_125;
     instance->lora_coding_rate = LoRaCodingRate_CR_4_7;
@@ -150,4 +152,14 @@ LoRaLowDataRateOptimization meshimi_ldro_get(MeshimiConfig* instance) {
 
 const char* meshimi_ldro_get_text(LoRaLowDataRateOptimization ldro) {
     return ldro_text[ldro];
+}
+
+void meshimi_frequency_set(MeshimiConfig* instance, uint32_t frequency) {
+    furi_assert(instance);
+    instance->lora_frequency = frequency;
+}
+
+uint32_t meshimi_frequency_get(MeshimiConfig* instance) {
+    furi_assert(instance);
+    return instance->lora_frequency;
 }

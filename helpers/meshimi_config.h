@@ -16,9 +16,11 @@ typedef enum MeshimiConfigMode {
 #define BANDWIDTH_COUNT 10
 #define CODING_RATE_COUNT 4
 #define LDRO_COUNT 2
+#define FREQUENCY_TEXT_LEN 10
 
 typedef struct {
     MeshimiConfigMode mode;
+    uint32_t lora_frequency;
     LoRaSpreadingFactor lora_spreading_factor;
     LoRaBandwidth lora_bandwidth;
     LoRaCodingRate lora_coding_rate;
@@ -162,3 +164,27 @@ LoRaLowDataRateOptimization meshimi_ldro_get(MeshimiConfig* instance);
  * @return
  */
 const char* meshimi_ldro_get_text(LoRaLowDataRateOptimization ldro);
+
+/**
+ * Set Frequency
+ *
+ * @param instance Pointer to a MeshimiConfig
+ * @param uint32_t frequency
+ */
+void meshimi_frequency_set(MeshimiConfig* instance, uint32_t frequency);
+
+/**
+ * Get Frequency
+ *
+ * @param instance Pointer to a MeshimiConfig
+ * @return uint32_t
+ */
+uint32_t meshimi_frequency_get(MeshimiConfig* instance);
+
+/**
+ * Get text representation of the frequency
+ *
+ * @param uint32_t frequency
+ * @return
+ */
+const char* meshimi_frequency_get_text(uint32_t frequency);

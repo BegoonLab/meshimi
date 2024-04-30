@@ -6,4 +6,5 @@ typedef enum {
     MeshimiEventBandwidth,
     MeshimiEventCodingRate,
     MeshimiEventLDRO,
+    MeshimiEventFrequency,
 } MeshimiCustomEvent;

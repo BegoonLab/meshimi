@@ -26,6 +26,7 @@
 #define MESHIMI_GET_MODULE "begoonlab.tech/meshimi"
 #define BACKLIGHT_ALWAYS_ON
 #define LOG_TAG "Meshimi"
+#define TEXT_STORE_SIZE 64U
 
 typedef struct Meshimi Meshimi;
 
@@ -39,6 +40,7 @@ struct Meshimi {
     SceneManager* scene_manager;
     ViewDispatcher* view_dispatcher;
 
+    char text_store[TEXT_STORE_SIZE];
     Submenu* submenu;
     Popup* popup;
     TextInput* text_input;
