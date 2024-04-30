@@ -48,7 +48,7 @@ bool validator_lora_frequency_callback(const char* text, FuriString* error, void
                 break;
             }
         }
-        if (!is_within_range) {
+        if(!is_within_range) {
             furi_string_printf(error, "Frequency\nis out of\nallowed\nrange");
             return false;
         }
@@ -88,10 +88,21 @@ void meshimi_scene_frequency_on_enter(void* context) {
 
 bool meshimi_scene_frequency_on_event(void* context, SceneManagerEvent event) {
     Meshimi* meshimi = context;
+    MeshimiConfig* config = meshimi->config;
     bool consumed = false;
 
     if(event.type == SceneManagerEventTypeCustom) {
         if(event.event == MeshimiEventFrequency) {
+            char* endptr;
+            long frequency = strtol(meshimi->text_store, &endptr, 10);
+
+            // Check if the entire string was successfully converted
+            if(*endptr != '\0') {
+                furi_crash();
+            }
+
+            meshimi_frequency_set(config, frequency);
+
             scene_manager_previous_scene(meshimi->scene_manager);
             consumed = true;
         }
