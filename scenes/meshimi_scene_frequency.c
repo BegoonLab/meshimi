@@ -40,12 +40,17 @@ bool validator_lora_frequency_callback(const char* text, FuriString* error, void
 
     // Check regional RF allowance
     if(region) {
+        bool is_within_range = false;
         for(uint16_t i = 0; i < region->bands_count; ++i) {
-            if((unsigned long)frequency < region->bands[i].start ||
-               (unsigned long)frequency > region->bands[i].end) {
-                furi_string_printf(error, "Frequency\nis out of\nallowed\nrange");
-                return false;
+            if((unsigned long)frequency >= region->bands[i].start &&
+               (unsigned long)frequency <= region->bands[i].end) {
+                is_within_range = true;
+                break;
             }
+        }
+        if (!is_within_range) {
+            furi_string_printf(error, "Frequency\nis out of\nallowed\nrange");
+            return false;
         }
     } else {
         // Check LoRa modem absolute limits
