@@ -1,0 +1,7 @@
+ADD_SCENE(meshimi, start, Start)
+ADD_SCENE(meshimi, connect, Connect)
+ADD_SCENE(meshimi, test, Test)
+ADD_SCENE(meshimi, configuration, Configuration)
+ADD_SCENE(meshimi, about, About)
+ADD_SCENE(meshimi, mode, Mode)
+ADD_SCENE(meshimi, frequency, Frequency)
